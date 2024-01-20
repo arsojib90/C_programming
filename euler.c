@@ -1,34 +1,40 @@
 #include<stdio.h>
-#include<conio.h>
-#include<math.h>
+        #include<math.h>
+        #define e 0.001
+        #define f(x) x*x*x-4*x+1
 
-/* Define function here */
-#define f(x) 1/(1+pow(x,2))
+        void main()
+        {
+            float x0,x1,x2;
+            float f0,f1,f2;
+            int i=0;
+            printf("enter the value of x0 and x1  =");
+            scanf("%f %f",&x0,&x1);
 
-int main()
-{
- float lower, upper, integration=0.0, stepSize, k;
- int i, subInterval;
- /* Input */
- printf("Enter lower limit of integration: ");
- scanf("%f", &lower);
- printf("Enter upper limit of integration: ");
- scanf("%f", &upper);
- printf("Enter number of sub intervals: ");
- scanf("%d", &subInterval);
+            do{
+                f0=f(x0);
+                f1=f(x1);
+                x2=(x0+x1)/2;
+                f2=f(x2);
+                if(f0*f2<0)
+                {
+                    x1=x2;
+                }
+                else
+                {
+                    x0=x2;
+                }
+                i++;
+                printf("no of itteration=%d \n",i);
+                printf("root of the equation is=%f\n",x2);
+                printf("value of function=%f\n\n",f2);
 
- /* Calculation */
- /* Finding step size */
- stepSize = (upper - lower)/subInterval;
+            }while(fabs(f2)>e);
 
- /* Finding Integration Value */
- integration = f(lower) + f(upper);
- for(i=1; i<= subInterval-1; i++)
- {
-  k = lower + i*stepSize;
-  integration = integration + 2 * f(k);
- }
- integration = integration * stepSize/2;
- printf("\nRequired value of integration is: %.3f", integration);
- return 0;
-}
+
+
+
+        return 0;
+
+
+        }
