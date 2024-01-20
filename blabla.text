@@ -1,62 +1,62 @@
 1.Newton 
-    #include<stdio.h>
-    #include<math.h>
-    float f(float x)
-    {
-        return x*log10(x) - 1.2;
-    }
-    float df (float x)
-    {
-        return log10(x) + 0.43429;
-    }
-    void main()
-    {
-        int itr, maxmitr;
-        float h, x0, x1, allerr;
-        printf("\nEnter x0, allowed error and maximum iterations\n");
-        scanf("%f %f %d", &x0, &allerr, &maxmitr);
-        for (itr=1; itr<=maxmitr; itr++)
+
+        #include<stdio.h>
+        #include<math.h>
+        #define e 0.001
+        #define f(x) pow(x,3)-4*x+1
+        #define df(x) 3*x*x-4
+
+        void main()
         {
-            h=f(x0)/df(x0);
-            x1=x0-h;
-            printf(" At Iteration no. %3d, x = %9.6f\n", itr, x1);
-            if (fabs(h) < allerr)
-            {
-                printf("After %3d iterations, root = %8.6f\n", itr, x1);
-                return 0;
-            }
-            x0=x1;
+            float x0,x1,f0,f1,df0;
+            int i=0;
+            printf("enter the value of x0=");
+            scanf("%f",&x0);
+
+            do{
+                f0=f(x0);
+                df0=df(x0);
+                x1=x0-(f0/df0);
+                f1=f(x1);
+                x0=x1;
+                i++;
+                printf("no of itteration=%d\t",i);
+                printf("root=%f\t",x1);
+                printf("the value of function=%f\n",f1);
+            }while(fabs(f1)>e);
+
+            return 0;
+
         }
-        printf(" The required solution does not converge or iterations are insufficient\n");
-        return 1;
-    }
+
 
 
 2.Euler
 
+        
         #include<stdio.h>
-        float fun(float x,float y)
+        #include<math.h>
+        #define f(x,y) -x*y
+
+        void main()
         {
-            float f;
-            f=x+y;
-            return f;
-        }
-        main()
-        {
-            float a,b,x,y,h,t,k;
-            printf("\nEnter x0,y0,h,xn: ");
+            float a,b,x,y,t,k,h;
+            printf("enter the value of x0,y0,h and xn =");
             scanf("%f%f%f%f",&a,&b,&h,&t);
             x=a;
             y=b;
-            printf("\n  x\t  y\n");
-            while(x<=t)
+            while(x<t)
             {
-                k=h*fun(x,y);
+                k=h*f(x,y);
                 y=y+k;
                 x=x+h;
-                printf("%0.3f\t%0.3f\n",x,y);
+                printf("x=%f\ty=%f\n",x,y);
+
             }
+
+            return 0;
         }
+
 
 
 3.Range-kutta
@@ -95,135 +95,147 @@
 4.Gauss-Seidal 
 
     #include<stdio.h>
+    #include<conio.h>
     #include<math.h>
-    #define X 2
-    main()
-    {
-        float x[X][X+1],a[X], ae, max,t,s,e;
-        int i,j,r,mxit;
-        for(i=0;i<X;i++) a[i]=0;
-        puts(" Eneter the elemrnts of augmented matrix rowwise\n");
-        for(i=0;i<X;i++)
-        {
-        for(j=0;j<X+1;j++)
-        {
-        scanf("%f",&x[i][j]);
-        }
-        }
-        printf(" Eneter the allowed error and maximum number of iteration: ");
-        scanf("%f%d",&ae,&mxit);
-        printf("Iteration\tx[1]\tx[2]\n");
-        for(r=1;r<=mxit;r++)
-        {
-            max=0;
-            for(i=0;i<X;i++)
-            {
-                s=0;
-                for(j=0;j<X;j++)
-                if(j!=i) s+=x[i][j]*a[j];
-                t=(x[i][X]-s)/x[i][i];
-                e=fabs(a[i]-t);
-                a[i]=t;
-            }
-            printf(" %5d\t",r);
-            for(i=0;i<X;i++)
-            printf(" %9.4f\t",a[i]);
-            printf("\n");
-            if(max<ae)
-            {
-                printf(" Converses in %3d iteration\n", r);
-                for(i=0;i<X;i++)
-                printf("a[%3d]=%7.4f\n", i+1,a[i]);
-                return 0;
-            }
 
-            }
-        }
+    /* In this example we are solving
+    3x + 20y - z = -18
+    2x - 3y + 20z = 25
+    20x + y - 2z = 17
+    */
+    /* Arranging given system of linear
+    equations in diagonally dominant
+    form:
+    20x + y - 2z = 17
+    3x + 20y -z = -18
+    2x - 3y + 20z = 25
+    */
+    /* Equations:
+    x = (17-y+2z)/20
+    y = (-18-3x+z)/20
+    z = (25-2x+3y)/20
+    */
+    /* Defining function */
+    /* Code Starts from here */
+
+    #define f1(x,y,z)  (17-y+2*z)/20
+    #define f2(x,y,z)  (-18-3*x+z)/20
+    #define f3(x,y,z)  (25-2*x+3*y)/20
+
+    /* Main function */
+    int main()
+    {
+    float x0=0, y0=0, z0=0, x1, y1, z1, e1, e2, e3, e;
+    int count=1;
+    printf("Enter tolerable error:\n");
+    scanf("%f", &e);
+
+    printf("\nCount\tx\ty\tz\n");
+    do
+    {
+    /* Calculation */
+    x1 = f1(x0,y0,z0);
+    y1 = f2(x1,y0,z0);
+    z1 = f3(x1,y1,z0);
+    printf("%d\t%0.4f\t%0.4f\t%0.4f\n",count, x1,y1,z1);
+
+    /* Error */
+    e1 = fabs(x0-x1);
+    e2 = fabs(y0-y1);
+    e3 = fabs(z0-z1);
+
+    count++;
+
+    /* Set value for next iteration */
+    x0 = x1;
+    y0 = y1;
+    z0 = z1;
+
+    }while(e1>e && e2>e && e3>e);
+
+    printf("\nSolution: x=%0.3f, y=%0.3f and z = %0.3f\n",x1,y1,z1);
+
+    return 0;
+    }
+
 
 5.Bisection 
 
         #include<stdio.h>
         #include<math.h>
-        float fun (float x)
+        #define e 0.001
+        #define f(x) x*x*x-4*x+1
+
+        void main()
         {
-            return (x*x*x - 4*x - 9);
-        }
-        void bisection (float *x, float a, float b, int *itr)
-        /* this function performs and prints the result of one iteration */
-        {
-            *x=(a+b)/2;
-            ++(*itr);
-            printf("Iteration no. %3d X = %7.5f\n", *itr, *x);
-        }
-        void main ()
-        {
-            int itr = 0, maxmitr;
-            float x, a, b, allerr, x1;
-            printf("\nEnter the values of a, b, allowed error and maximum iterations:\n");
-            scanf("%f %f %f %d", &a, &b, &allerr, &maxmitr);
-            bisection (&x, a, b, &itr);
-            do
-            {
-                if (fun(a)*fun(x) < 0)
-                    b=x;
-                else
-                    a=x;
-                bisection (&x1, a, b, &itr);
-                if (fabs(x1-x) < allerr)
+            float x0,x1,x2;
+            float f0,f1,f2;
+            int i=0;
+            printf("enter the value of x0 and x1  =");
+            scanf("%f %f",&x0,&x1);
+
+            do{
+                f0=f(x0);
+                f1=f(x1);
+                x2=(x0+x1)/2;
+                f2=f(x2);
+                if(f0*f2<0)
                 {
-                    printf("After %d iterations, root = %6.4f\n", itr, x1);
-                    return 0;
+                    x1=x2;
                 }
-                x=x1;
-            }
-            while (itr < maxmitr);
-            printf("The solution does not converge or iterations are not sufficient");
-            return 1;
+                else
+                {
+                    x0=x2;
+                }
+                i++;
+                printf("no of itteration=%d \n",i);
+                printf("root of the equation is=%f\n",x2);
+                printf("value of function=%f\n\n",f2);
+
+            }while(fabs(f2)>e);
+
+
+
+
+        return 0;
+
+
         }
+
 
 6.Trapezoidal 
 
         #include<stdio.h>
         #include<conio.h>
         #include<math.h>
-        float f(float x)
+
+        /* Define function here */
+        #define f(x) 1/(1+pow(x,2))
+
+        int main()
         {
-            return(1/(1+pow(x,2)));
+        float lower, upper, integration=0.0, stepSize, k;
+        int i, subInterval;
+        /* Input */
+        printf("Enter lower limit of integration: ");
+        scanf("%f", &lower);
+        printf("Enter upper limit of integration: ");
+        scanf("%f", &upper);
+        printf("Enter number of sub intervals: ");
+        scanf("%d", &subInterval);
+
+        /* Calculation */
+        /* Finding step size */
+        stepSize = (upper - lower)/subInterval;
+
+        /* Finding Integration Value */
+        integration = f(lower) + f(upper);
+        for(i=1; i<= subInterval-1; i++)
+        {
+        k = lower + i*stepSize;
+        integration = integration + 2 * f(k);
         }
-        void main()
-        {
-            int i,n;
-            float x0,xn,h,y[20],so,se,ans,x[20];
-            printf("\n Enter values of x0,xn,h:\n");
-            scanf("%f%f%f",&x0,&xn,&h);
-            n=(xn-x0)/h;
-            if(n%2==1)
-            {
-                n=n+1;
-            }
-            h=(xn-x0)/n;
-            printf("\nrefined value of n and h are:%d  %f\n",n,h);
-            printf("\n Y values \n");
-            for(i=0; i<=n; i++)
-            {
-                x[i]=x0+i*h;
-                y[i]=f(x[i]);
-                printf("\n%f\n",y[i]);
-            }
-            so=0;
-            se=0;
-            for(i=1; i<n; i++)
-            {
-                if(i%2==1)
-                {
-                    so=so+y[i];
-                }
-                else
-                {
-                    se=se+y[i];
-                }
-            }
-            ans=h/3*(y[0]+y[n]+4*so+2*se);
-            printf("\nfinal integration is %f",ans);
-            getch();
+        integration = integration * stepSize/2;
+        printf("\nRequired value of integration is: %.3f", integration);
+        return 0;
         }

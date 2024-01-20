@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<math.h>
 #define e 0.001
