@@ -1,260 +1,516 @@
-1.Newton 
+1.sum_two_integers
 
-        #include<stdio.h>
-        #include<math.h>
-        #define e 0.001
-        #define f(x) pow(x,3)-4*x+1
-        #define df(x) 3*x*x-4
+    #include <stdio.h>
+    int main() {    
 
-        void main()
-        {
-            float x0,x1,f0,f1,df0;
-            int i=0;
-            printf("enter the value of x0=");
-            scanf("%f",&x0);
-
-            do{
-                f0=f(x0);
-                df0=df(x0);
-                x1=x0-(f0/df0);
-                f1=f(x1);
-                x0=x1;
-                i++;
-                printf("no of itteration=%d\t",i);
-                printf("root=%f\t",x1);
-                printf("the value of function=%f\n",f1);
-            }while(fabs(f1)>e);
-
-            return 0;
-
-        }
-
-
-
-2.Euler
-
+        int number1, number2, sum;
         
-        #include<stdio.h>
-        #include<math.h>
-        #define f(x,y) (x+y)
+        printf("Enter two integers: ");
+        scanf("%d %d", &number1, &number2);
 
-        void main()
-        {
-            float a,b,x,y,t,k,h;
-            printf("enter the value of x0,y0,h and xn =");
-            scanf("%f%f%f%f",&a,&b,&h,&t);
-            x=a;
-            y=b;
-            while(x<t)
-            {
-                k=h*f(x,y);
-                y=y+k;
-                x=x+h;
-                printf("x=%f\ty=%f\t",x,y);
-                printf("approximation =%f\n",x+y);
+        // calculate the sum
+        sum = number1 + number2;      
+        
+        printf("%d + %d = %d", number1, number2, sum);
+        return 0;
+    }
 
-            }
+2.Muliplication 
 
-            return 0;
-        }
+    #include <stdio.h>
+    int main() {    
 
+        int number1, number2, sum;
+        
+        printf("Enter two integers: ");
+        scanf("%d %d", &number1, &number2);
 
+        // calculate the sum
+        sum = number1 + number2;      
+        
+        printf("%d + %d = %d", number1, number2, sum);
+        return 0;
+    }
 
-
-3.Range-kutta
-
-        #include<stdio.h>
-        #include<conio.h>
-
-        #define f(x,y) (x+y)
-
-        int main()
-        {
-            float x0, y0, xn, h, yn, k1, k2, k3, k4, k;
-            int i, n;
-            printf("Enter Initial Condition\n");
-            printf("x0 = ");
-            scanf("%f", &x0);
-            printf("y0 = ");
-            scanf("%f", &y0);
-            printf("Enter calculation point xn = ");
-            scanf("%f", &xn);
-            printf("Enter number of steps: ");
-            scanf("%d", &n);
-
-            /* Calculating step size (h) */
-            h = (xn-x0)/n;
-
-            /* Runge Kutta Method */
-            printf("\nx0\ty0\tyn\n");
-            for(i=0; i < n; i++)
-            {
-            k1 = h * (f(x0, y0));
-            k2 = h * (f((x0+h/2), (y0+k1/2)));
-            k3 = h * (f((x0+h/2), (y0+k2/2)));
-            k4 = h * (f((x0+h), (y0+k3)));
-            k = (k1+2*k2+2*k3+k4)/6;
-            yn = y0 + k;
-            printf("%0.4f\t%0.4f\t%0.4f\n",x0,y0,yn);
-            x0 = x0+h;
-            y0 = yn;
-            }
-
-            /* Displaying result */
-            printf("\nValue of y at x = %0.2f is %0.3f",xn, yn);
-            return 0;
-        }
-
-
-
-4.Gauss-Seidal 
+3.Swap Numbers 
 
     #include<stdio.h>
-    #include<conio.h>
-    #include<math.h>
+    int main() {
+    double first, second, temp;
+    printf("Enter first number: ");
+    scanf("%lf", &first);
+    printf("Enter second number: ");
+    scanf("%lf", &second);
 
-    /* In this example we are solving
-    3x + 20y - z = -18
-    2x - 3y + 20z = 25
-    20x + y - 2z = 17
-    */
-    /* Arranging given system of linear
-    equations in diagonally dominant
-    form:
-    20x + y - 2z = 17
-    3x + 20y -z = -18
-    2x - 3y + 20z = 25
-    */
-    /* Equations:
-    x = (17-y+2z)/20
-    y = (-18-3x+z)/20
-    z = (25-2x+3y)/20
-    */
-    /* Defining function */
-    /* Code Starts from here */
+    // value of first is assigned to temp
+    temp = first;
 
-    #define f1(x,y,z)  (17-y+2*z)/20
-    #define f2(x,y,z)  (-18-3*x+z)/20
-    #define f3(x,y,z)  (25-2*x+3*y)/20
+    // value of second is assigned to first
+    first = second;
 
-    /* Main function */
-    int main()
-    {
-    float x0=0, y0=0, z0=0, x1, y1, z1, e1, e2, e3, e;
-    int count=1;
-    printf("Enter tolerable error:\n");
-    scanf("%f", &e);
+    // value of temp (initial value of first) is assigned to second
+    second = temp;
 
-    printf("\nCount\tx\ty\tz\n");
-    do
-    {
-    /* Calculation */
-    x1 = f1(x0,y0,z0);
-    y1 = f2(x1,y0,z0);
-    z1 = f3(x1,y1,z0);
-    printf("%d\t%0.4f\t%0.4f\t%0.4f\n",count, x1,y1,z1);
+    // %.2lf displays number up to 2 decimal points
+    printf("\nAfter swapping, first number = %.2lf\n", first);
+    printf("After swapping, second number = %.2lf", second);
+    return 0;
+    }
 
-    /* Error */
-    e1 = fabs(x0-x1);
-    e2 = fabs(y0-y1);
-    e3 = fabs(z0-z1);
+4.Check even or odd
 
-    count++;
+    #include <stdio.h>
+    int main() {
+        int num;
+        printf("Enter an integer: ");
+        scanf("%d", &num);
 
-    /* Set value for next iteration */
-    x0 = x1;
-    y0 = y1;
-    z0 = z1;
+        // true if num is perfectly divisible by 2
+        if(num % 2 == 0)
+            printf("%d is even.", num);
+        else
+            printf("%d is odd.", num);
+        
+        return 0;
+    }
 
-    }while(e1>e && e2>e && e3>e);
+5.sum of natural Numbers
 
-    printf("\nSolution: x=%0.3f, y=%0.3f and z = %0.3f\n",x1,y1,z1);
+    #include <stdio.h>
+    int main() {
+        int n, i, sum = 0;
+
+        printf("Enter a positive integer: ");
+        scanf("%d", &n);
+
+        for (i = 1; i <= n; ++i) {
+            sum += i;
+        }
+
+        printf("Sum = %d", sum);
+        return 0;
+    }
+
+6.Factorial of a number 
+
+    #include <stdio.h>
+    int main() {
+        int n, i;
+        unsigned long long fact = 1;
+        printf("Enter an integer: ");
+        scanf("%d", &n);
+
+        // shows error if the user enters a negative integer
+        if (n < 0)
+            printf("Error! Factorial of a negative number doesn't exist.");
+        else {
+            for (i = 1; i <= n; ++i) {
+                fact *= i;
+            }
+            printf("Factorial of %d = %llu", n, fact);
+        }
+
+        return 0;
+    }
+
+7.Fibonacci sequence 
+
+    #include <stdio.h>
+    int main() {
+
+    int i, n;
+
+    // initialize first and second terms
+    int t1 = 0, t2 = 1;
+
+    // initialize the next term (3rd term)
+    int nextTerm = t1 + t2;
+
+    // get no. of terms from user
+    printf("Enter the number of terms: ");
+    scanf("%d", &n);
+
+    // print the first two terms t1 and t2
+    printf("Fibonacci Series: %d, %d, ", t1, t2);
+
+    // print 3rd to nth terms
+    for (i = 3; i <= n; ++i) {
+        printf("%d, ", nextTerm);
+        t1 = t2;
+        t2 = nextTerm;
+        nextTerm = t1 + t2;
+    }
 
     return 0;
     }
 
+8.GCD
 
-5.Bisection 
+    #include <stdio.h>
+    int main()
+    {
+        int n1, n2, i, gcd;
 
-        #include<stdio.h>
-        #include<math.h>
-        #define e 0.001
-        #define f(x) x*x*x-4*x+1
+        printf("Enter two integers: ");
+        scanf("%d %d", &n1, &n2);
 
-        void main()
+        for(i=1; i <= n1 && i <= n2; ++i)
         {
-            float x0,x1,x2;
-            float f0,f1,f2;
-            int i=0;
-            printf("enter the value of x0 and x1  =");
-            scanf("%f %f",&x0,&x1);
+            // Checks if i is factor of both integers
+            if(n1%i==0 && n2%i==0)
+                gcd = i;
+        }
 
-            do{
-                f0=f(x0);
-                f1=f(x1);
-                x2=(x0+x1)/2;
-                f2=f(x2);
-                if(f0*f2<0)
-                {
-                    x1=x2;
-                }
+        printf("G.C.D of %d and %d is %d", n1, n2, gcd);
+
+        return 0;
+    }
+
+9.prime number between two intervals
+
+    #include <stdio.h>
+
+    int main() {
+    int low, high, i, flag;
+    printf("Enter two numbers(intervals): ");
+    scanf("%d %d", &low, &high);
+    printf("Prime numbers between %d and %d are: ", low, high);
+
+    // iteration until low is not equal to high
+    while (low < high) {
+        flag = 0;
+
+        // ignore numbers less than 2
+        if (low <= 1) {
+            ++low;
+            continue;
+        }
+
+        // if low is a non-prime number, flag will be 1
+        for (i = 2; i <= low / 2; ++i) {
+
+            if (low % i == 0) {
+                flag = 1;
+                break;
+            }
+        }
+
+        if (flag == 0)
+            printf("%d ", low);
+
+        // to check prime for the next number
+        // increase low by 1
+        ++low;
+    }
+
+    return 0;
+    }
+
+10.Factorial(recursion)
+
+    #include<stdio.h>
+    long int multiplyNumbers(int n);
+    int main() {
+        int n;
+        printf("Enter a positive integer: ");
+        scanf("%d",&n);
+        printf("Factorial of %d = %ld", n, multiplyNumbers(n));
+        return 0;
+    }
+
+    long int multiplyNumbers(int n) {
+        if (n>=1)
+            return n*multiplyNumbers(n-1);
+        else
+            return 1;
+    }
+
+11.Largest element in Array 
+
+    #include <stdio.h>
+    int main() {
+    int n;
+    double arr[100];
+    printf("Enter the number of elements (1 to 100): ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; ++i) {
+        printf("Enter number%d: ", i + 1);
+        scanf("%lf", &arr[i]);
+    }
+
+    // storing the largest number to arr[0]
+    for (int i = 1; i < n; ++i) {
+        if (arr[0] < arr[i]) {
+        arr[0] = arr[i];
+        }
+    }
+
+    printf("Largest element = %.2lf", arr[0]);
+
+    return 0;
+    }
+
+12.check prime number
+
+    #include <math.h>
+    #include <stdio.h>
+
+    int checkPrimeNumber(int n);
+    int checkArmstrongNumber(int n);
+
+    int main() {
+    int n, flag;
+    printf("Enter a positive integer: ");
+    scanf("%d", &n);
+
+    // check prime number
+    flag = checkPrimeNumber(n);
+    if (flag == 1)
+        printf("%d is a prime number.\n", n);
+    else
+        printf("%d is not a prime number.\n", n);
+
+    // check Armstrong number
+    flag = checkArmstrongNumber(n);
+    if (flag == 1)
+        printf("%d is an Armstrong number.", n);
+    else
+        printf("%d is not an Armstrong number.", n);
+    return 0;
+    }
+
+    // function to check prime number
+    int checkPrimeNumber(int n) {
+    int i, flag = 1, squareRoot;
+
+    // computing the square root
+    squareRoot = sqrt(n);
+    for (i = 2; i <= squareRoot; ++i) {
+        // condition for non-prime number
+        if (n % i == 0) {
+            flag = 0;
+            break;
+        }
+    }
+    return flag;
+    }
+
+    // function to check Armstrong number
+    int checkArmstrongNumber(int num) {
+    int originalNum, remainder, n = 0, flag;
+    double result = 0.0;
+
+    // store the number of digits of num in n
+    for (originalNum = num; originalNum != 0; ++n) {
+        originalNum /= 10;
+    }
+
+    for (originalNum = num; originalNum != 0; originalNum /= 10) {
+        remainder = originalNum % 10;
+
+        // store the sum of the power of individual digits in result
+        result += pow(remainder, n);
+    }
+
+    // condition for Armstrong number
+    if (round(result) == num)
+        flag = 1;
+    else
+        flag = 0;
+    return flag;
+    }
+
+13.write in file
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main() {
+        char sentence[1000];
+
+        // creating file pointer to work with files
+        FILE *fptr;
+
+        // opening file in writing mode
+        fptr = fopen("program.txt", "w");
+
+        // exiting program 
+        if (fptr == NULL) {
+            printf("Error!");
+            exit(1);
+        }
+        printf("Enter a sentence:\n");
+        fgets(sentence, sizeof(sentence), stdin);
+        fprintf(fptr, "%s", sentence);
+        fclose(fptr);
+        return 0;
+    }
+
+14.Read from file 
+
+    #include <stdio.h>
+    #include <stdlib.h> // For exit() function
+    int main() {
+        char c[1000];
+        FILE *fptr;
+        if ((fptr = fopen("program.txt", "r")) == NULL) {
+            printf("Error! File cannot be opened.");
+            // Program exits if the file pointer returns NULL.
+            exit(1);
+        }
+
+        // reads text until newline is encountered
+        fscanf(fptr, "%[^\n]", c);
+        printf("Data from the file:\n%s", c);
+        fclose(fptr);
+
+        return 0;
+    }
+
+15.read and write marks and num and store them in a file 
+
+    {
+    char name[50];
+    int marks, i, num;
+
+    printf("Enter number of students: ");
+    scanf("%d", &num);
+
+    FILE *fptr;
+    fptr = (fopen("C:\\student.txt", "w"));
+    if(fptr == NULL)
+    {
+        printf("Error!");
+        exit(1);
+    }
+
+    for(i = 0; i < num; ++i)
+    {
+        printf("For student%d\nEnter name: ", i+1);
+        scanf("%s", name);
+
+        printf("Enter marks: ");
+        scanf("%d", &marks);
+
+        fprintf(fptr,"\nName: %s \nMarks=%d \n", name, marks);
+    }
+
+    fclose(fptr);
+    return 0;
+    }
+
+16.C program to write all the members of an array of structures to a file using fwrite(). Read the array from the file and display on the screen.
+    #include <stdio.h>
+    struct student
+    {
+    char name[50];
+    int height;
+    };
+    int main(){
+        struct student stud1[5], stud2[5];   
+        FILE *fptr;
+        int i;
+
+        fptr = fopen("file.txt","wb");
+        for(i = 0; i < 5; ++i)
+        {
+            fflush(stdin);
+            printf("Enter name: ");
+            gets(stud1[i].name);
+
+            printf("Enter height: "); 
+            scanf("%d", &stud1[i].height); 
+        }
+
+        fwrite(stud1, sizeof(stud1), 1, fptr);
+        fclose(fptr);
+
+        fptr = fopen("file.txt", "rb");
+        fread(stud2, sizeof(stud2), 1, fptr);
+        for(i = 0; i < 5; ++i)
+        {
+            printf("Name: %s\nHeight: %d", stud2[i].name, stud2[i].height);
+        }
+        fclose(fptr);
+    }
+
+17.Grade_programm
+
+    #include<stdio.h>
+    #include<conio.h>
+    int main()
+    {
+        int i;
+        float mark, sum=0, avg;
+        printf("Enter Marks obtained in 5 Subjects: ");
+        for(i=0; i<5; i++)
+        {
+            scanf("%f", &mark);
+            sum = sum+mark;
+        }
+        avg = sum/5;
+        printf("\nGrade = ");
+        if(avg>=91 && avg<=100)
+            printf("A1");
+        else if(avg>=81 && avg<91)
+            printf("A2");
+        else if(avg>=71 && avg<81)
+            printf("B1");
+        else if(avg>=61 && avg<71)
+            printf("B2");
+        else if(avg>=51 && avg<61)
+            printf("C1");
+        else if(avg>=41 && avg<51)
+            printf("C2");
+        else if(avg>=33 && avg<41)
+            printf("D");
+        else if(avg>=21 && avg<33)
+            printf("E1");
+        else if(avg>=0 && avg<21)
+            printf("E2");
+        else
+            printf("Invalid!");
+        getch();
+        return 0;
+    }
+
+18.eligible 
+#include <stdio.h>   // Include the standard input/output header file.
+
+void main()
+{
+    int p, c, m, t, mp;   // Declare variables to store marks and totals.
+
+    printf("Eligibility Criteria :\n");   // Display eligibility criteria.
+    printf("Marks in Maths >=65\n");
+    printf("and Marks in Phy >=55\n");
+    printf("and Marks in Chem>=50\n");
+    printf("and Total in all three subject >=190\n");
+    printf("or Total in Maths and Physics >=140\n");
+    printf("-------------------------------------\n");
+
+    printf("Input the marks obtained in Physics :");   // Prompt user for input.
+    scanf("%d", &p);   // Read and store marks in 'p'.
+    printf("Input the marks obtained in Chemistry :");
+    scanf("%d", &c);   // Read and store marks in 'c'.
+    printf("Input the marks obtained in Mathematics :");
+    scanf("%d", &m);   // Read and store marks in 'm'.
+
+    printf("Total marks of Maths, Physics and Chemistry : %d\n", m + p + c);   // Calculate and display total marks.
+    printf("Total marks of Maths and Physics : %d\n", m + p);   // Calculate and display total marks.
+
+    if (m >= 65)   // Check if marks in Maths are greater than or equal to 65.
+        if (p >= 55)   // Check if marks in Physics are greater than or equal to 55.
+            if (c >= 50)   // Check if marks in Chemistry are greater than or equal to 50.
+                if ((m + p + c) >= 190 || (m + p) >= 140)   // Check if total marks criteria are met.
+                    printf("The candidate is eligible for admission.\n");   // Print eligibility message.
                 else
-                {
-                    x0=x2;
-                }
-                i++;
-                printf("no of itteration=%d \n",i);
-                printf("root of the equation is=%f\n",x2);
-                printf("value of function=%f\n\n",f2);
-
-            }while(fabs(f2)>e);
-
-
-
-
-        return 0;
-
-
-        }
-
-
-6.Trapezoidal 
-
-        #include<stdio.h>
-        #include<conio.h>
-        #include<math.h>
-
-        /* Define function here */
-        #define f(x) 1/(1+pow(x,2))
-
-        int main()
-        {
-        float lower, upper, integration=0.0, stepSize, k;
-        int i, subInterval;
-        /* Input */
-        printf("Enter lower limit of integration: ");
-        scanf("%f", &lower);
-        printf("Enter upper limit of integration: ");
-        scanf("%f", &upper);
-        printf("Enter number of sub intervals: ");
-        scanf("%d", &subInterval);
-
-        /* Calculation */
-        /* Finding step size */
-        stepSize = (upper - lower)/subInterval;
-
-        /* Finding Integration Value */
-        integration = f(lower) + f(upper);
-        for(i=1; i<= subInterval-1; i++)
-        {
-        k = lower + i*stepSize;
-        integration = integration + 2 * f(k);
-        }
-        integration = integration * stepSize/2;
-        printf("\nRequired value of integration is: %.3f", integration);
-        return 0;
-        }
-
-
-
-end
+                    printf("The candidate is not eligible.\n");   // Print ineligibility message.
+            else
+                printf("The candidate is not eligible.\n");   // Print ineligibility message.
+        else
+            printf("The candidate is not eligible.\n");   // Print ineligibility message.
+    else
+        printf("The candidate is not eligible.\n");   // Print ineligibility message.
+}
